@@ -1,2 +1,2 @@
-# COSC4353Group19
-Group19
+# QueueSmart
+Cosc4353Group19
