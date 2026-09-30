@@ -7,6 +7,10 @@ function Navbar() {
         <a href="/">Login</a>
         {" | "}
         <a href="/register">Register</a>
+        {" | "}
+        <a href="/dashboard">Dashboard</a>
+        {" | "}
+        <a href="/history">History</a>
       </div>
     </nav>
   );
