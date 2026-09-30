@@ -1,6 +1,9 @@
+import Navbar from "../components/Navbar";
+
 function Register() {
   return (
     <div>
+      <Navbar />
       <h1>QueueSmart</h1>
       <h2>Create an Account</h2>
 

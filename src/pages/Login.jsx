@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Navbar from "../components/Navbar";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -17,6 +18,8 @@ function Login() {
 
   return (
     <div>
+      <Navbar />
+      
       <h1>QueueSmart</h1>
       <h2>Login</h2>
 
