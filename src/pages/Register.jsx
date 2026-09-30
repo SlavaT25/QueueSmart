@@ -12,6 +12,9 @@ function Register() {
         <input type="password" placeholder="Create a password" />
 
         <button type="submit">Register</button>
+        <p>
+          Already have an account? <a href="/">Login</a>
+        </p>
       </form>
     </div>
   );

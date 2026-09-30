@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function Register() {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,18 +12,13 @@ function Register() {
       return;
     }
 
-    if (password.length < 6) {
-      alert("Password must be at least 6 characters.");
-      return;
-    }
-
-    alert("Registration successful!");
+    alert("Login successful!");
   };
 
   return (
     <div>
       <h1>QueueSmart</h1>
-      <h2>Create an Account</h2>
+      <h2>Login</h2>
 
       <form onSubmit={handleSubmit}>
         <label>Email</label>
@@ -37,15 +32,19 @@ function Register() {
         <label>Password</label>
         <input
           type="password"
-          placeholder="Create a password"
+          placeholder="Enter your password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
 
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
+
+        <p>
+          Don't have an account? <a href="/register">Register</a>
+        </p>
       </form>
     </div>
   );
 }
 
-export default Register;
+export default Login;
