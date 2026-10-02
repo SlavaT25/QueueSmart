@@ -1,9 +1,19 @@
+/* Overall page */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fa;
+  color: #222;
+}
+
+/* Navigation bar */
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 30px;
-  border-bottom: 1px solid #ccc;
+  background-color: white;
+  border-bottom: 1px solid #ddd;
 }
 
 nav h2 {
@@ -18,4 +28,83 @@ nav a {
 
 nav a:hover {
   text-decoration: underline;
+}
+
+/* Main content */
+main {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 30px;
+}
+
+main h1 {
+  margin: 0 0 30px;
+  text-align: center;
+}
+
+main section {
+  background-color: white;
+  margin-bottom: 20px;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+main section h2 {
+  margin: 0 0 15px;
+}
+
+main section p {
+  margin: 0;
+}
+
+main ul {
+  margin: 0;
+  padding-left: 25px;
+}
+
+main li {
+  margin-bottom: 8px;
+}
+
+/* Forms */
+form {
+  width: 400px;
+  margin: 30px auto;
+  padding: 25px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+  display: block;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Buttons */
+button {
+  margin-top: 20px;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #333;
+  color: white;
+}
+
+button:hover {
+  opacity: 0.85;
 }
