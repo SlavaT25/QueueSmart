@@ -15,7 +15,7 @@ function QueueManagement() {
       return;
     }
 
-    alert(${queue[0].name} is being served.);
+    alert(`${queue[0].name} is being served.`);
 
     setQueue(queue.slice(1));
   };

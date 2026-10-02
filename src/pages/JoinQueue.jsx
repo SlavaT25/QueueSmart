@@ -27,7 +27,7 @@ function JoinQueue() {
       return;
     }
 
-    alert(You joined the ${service} queue.);
+    alert(`You joined the ${service} queue.`);
   };
 
   return (
