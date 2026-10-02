@@ -1,6 +1,10 @@
 import Navbar from "../components/Navbar";
 
 function QueueStatus() {
+  const handleLeaveQueue = () => {
+    alert("You have left the queue.");
+  };
+
   return (
     <div>
       <Navbar />
@@ -23,7 +27,7 @@ function QueueStatus() {
           <p>Waiting</p>
         </section>
 
-        <button>Leave Queue</button>
+        <button onClick={handleLeaveQueue}>Leave Queue</button>
       </main>
     </div>
   );
