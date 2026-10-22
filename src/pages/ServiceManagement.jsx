@@ -1,91 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
+import { api } from "../api";
 
 function ServiceManagement() {
-  const [serviceName, setServiceName] = useState("");
-  const [description, setDescription] = useState("");
-  const [duration, setDuration] = useState("");
-  const [priority, setPriority] = useState("Low");
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (!serviceName || !description || !duration) {
-      alert("Please complete all required fields.");
-      return;
-    }
-
-    if (serviceName.length > 100) {
-      alert("Service name must be 100 characters or less.");
-      return;
-    }
-
-    if (duration <= 0) {
-      alert("Expected duration must be greater than 0.");
-      return;
-    }
-
-    alert("Service created successfully!");
+  const [services, setServices] = useState([]);
+  const [error, setError] = useState("");
+  const load = () => api("/services").then(({ services: list }) => setServices(list)).catch((reason) => setError(reason.message));
+  useEffect(() => { load(); }, []);
+  const handleSubmit = async (event) => {
+    event.preventDefault(); setError(""); const formElement = event.currentTarget; const form = new FormData(formElement);
+    try { await api("/services", { method: "POST", body: JSON.stringify({ name: form.get("name"), description: form.get("description"), expectedDuration: Number(form.get("duration")), priority: form.get("priority") }) }); formElement.reset(); load(); }
+    catch (reason) { setError(reason.message); }
   };
-
-  return (
-    <div>
-      <Navbar />
-
-      <main>
-        <h1>Service Management</h1>
-
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="serviceName">Service Name</label>
-
-          <input
-            id="serviceName"
-            type="text"
-            maxLength="100"
-            value={serviceName}
-            onChange={(event) => setServiceName(event.target.value)}
-            required
-          />
-
-          <label htmlFor="description">Description</label>
-
-          <textarea
-            id="description"
-            value={description}
-            onChange={(event) => setDescription(event.target.value)}
-            required
-          />
-
-          <label htmlFor="duration">
-            Expected Duration (minutes)
-          </label>
-
-          <input
-            id="duration"
-            type="number"
-            min="1"
-            value={duration}
-            onChange={(event) => setDuration(event.target.value)}
-            required
-          />
-
-          <label htmlFor="priority">Priority</label>
-
-          <select
-            id="priority"
-            value={priority}
-            onChange={(event) => setPriority(event.target.value)}
-          >
-            <option value="Low">Low</option>
-            <option value="Medium">Medium</option>
-            <option value="High">High</option>
-          </select>
-
-          <button type="submit">Create Service</button>
-        </form>
-      </main>
-    </div>
-  );
+  const toggle = async (service) => { try { await api(`/services/${service.id}/open`, { method: "PATCH", body: JSON.stringify({ open: !service.open }) }); load(); } catch (reason) { setError(reason.message); } };
+  return <div><Navbar /><main><h1>Service Management</h1>{error && <p role="alert">{error}</p>}<h2>Services</h2>{services.map((service) => <section key={service.id}><h3>{service.name}</h3><p>{service.description}</p><p>{service.expectedDuration} minutes · {service.priority} priority · {service.open ? "Open" : "Closed"}</p><button onClick={() => toggle(service)}>{service.open ? "Close Queue" : "Open Queue"}</button></section>)}
+    <h2>Create Service</h2><form onSubmit={handleSubmit}><label htmlFor="serviceName">Service Name</label><input id="serviceName" name="name" maxLength="100" required />
+    <label htmlFor="description">Description</label><textarea id="description" name="description" maxLength="500" required />
+    <label htmlFor="duration">Expected Duration (minutes)</label><input id="duration" name="duration" type="number" min="1" max="480" required />
+    <label htmlFor="priority">Priority</label><select id="priority" name="priority"><option>Low</option><option>Medium</option><option>High</option></select><button type="submit">Create Service</button></form>
+  </main></div>;
 }
-
 export default ServiceManagement;
