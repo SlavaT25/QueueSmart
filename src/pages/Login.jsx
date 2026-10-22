@@ -1,9 +1,13 @@
 import { useState } from "react";
 import Navbar from "../components/Navbar";
+import { api, setCurrentUser } from "../api";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,7 +17,9 @@ function Login() {
       return;
     }
 
-    alert("Login successful!");
+    api("/auth/login", { method: "POST", body: JSON.stringify({ email, password }) })
+      .then(({ user }) => { setCurrentUser(user); navigate(user.role === "Administrator" ? "/admin" : "/dashboard"); })
+      .catch((reason) => setError(reason.message));
   };
 
   return (
@@ -24,22 +30,23 @@ function Login() {
       <h2>Login</h2>
 
       <form onSubmit={handleSubmit}>
-        <label>Email</label>
+        <label htmlFor="email">Email</label>
         <input
-          type="email"
+          id="email" type="email" required
           placeholder="Enter your email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
 
-        <label>Password</label>
+        <label htmlFor="password">Password</label>
         <input
-          type="password"
+          id="password" type="password" required
           placeholder="Enter your password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
 
+        {error && <p role="alert">{error}</p>}
         <button type="submit">Login</button>
 
         <p>
