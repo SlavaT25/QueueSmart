@@ -13,7 +13,7 @@ function JoinQueue() {
     event.preventDefault(); setError(""); setMessage("");
     try {
       const { entry } = await api("/queue", { method: "POST", body: JSON.stringify({ userId: getCurrentUser()?.id, serviceId }) });
-      setMessage(Joined ${entry.serviceName}. Position ${entry.position}; estimated wait ${entry.estimatedWait} minutes.);
+      setMessage('Joined ${entry.serviceName}. Position ${entry.position}; estimated wait ${entry.estimatedWait} minutes.');
     } catch (reason) { setError(reason.message); }
   };
   return <div><Navbar /><main><h1>Join Queue</h1><form onSubmit={handleJoin}>
