@@ -9,13 +9,14 @@ function UserDashboard() {
   const [notifications, setNotifications] = useState([]);
   const [error, setError] = useState("");
   const user = getCurrentUser();
+  const userId = user?.id;
   useEffect(() => {
     api("/services").then(({ services: items }) => setServices(items)).catch((reason) => setError(reason.message));
-    if (user) {
-      api(`/queue/mine?${query({ userId: user.id })}`).then(({ entries: items }) => setEntries(items)).catch((reason) => setError(reason.message));
-      api(`/notifications?${query({ userId: user.id })}`).then(({ notifications: items }) => setNotifications(items)).catch((reason) => setError(reason.message));
+    if (userId) {
+      api(`/queue/mine?${query({ userId })}`).then(({ entries: items }) => setEntries(items)).catch((reason) => setError(reason.message));
+      api(`/notifications?${query({ userId })}`).then(({ notifications: items }) => setNotifications(items)).catch((reason) => setError(reason.message));
     }
-  }, []);
+  }, [userId]);
   const firstName = user?.name?.trim().split(/\s+/)[0] || "there";
 
   return <div className="app-shell"><Navbar /><main className="dashboard-page">
